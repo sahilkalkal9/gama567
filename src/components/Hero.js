@@ -106,7 +106,7 @@ function Hero() {
         moment(a.createdAt).diff(moment(b.createdAt))
       );
       setGames(sortedGames);
-    } catch (error) {
+    } catch (error) { 
       console.error("Error fetching games:", error);
     }
   };
