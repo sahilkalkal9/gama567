@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Footer from "./components/Footer";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import { Route, Routes } from "react-router";
+import HowToPlay from "./components/HowtoPlay";
+import Hero from "./components/Hero";
+import Charts from "./components/Charts";
+import AboutUs from "./components/AboutUs";
+import GameRules from "./components/GameRules";
+import TermsAndConditions from "./components/TermsAndConditions";
+import PanelChart from "./components/PanelChart";
+import JodiChart from "./components/JodiChart";
 
 function App() {
+  const [activeTab, setActiveTab] = useState("home");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen w-full overflow-y-hidden bg-white text-black">
+      {/* Header */}
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Routes>
+        <Route path="/" element={<Hero />} />
+        <Route path="/howtoplay" element={<HowToPlay />} />
+        <Route path="/gamerules" element={<GameRules />} />
+        <Route path="/charts" element={<Charts />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/mrecords/:gameName-panel-chart" element={<PanelChart />} />
+        <Route path="/mrecords/:gameName-jodi-chart" element={<JodiChart />} />
+      </Routes>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
