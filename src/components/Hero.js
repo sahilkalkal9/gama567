@@ -9,11 +9,14 @@ import apiInstance from "../utils/axios";
 import moment from "moment";
 
 function Hero() {
+
+
   const [games, setGames] = useState([]);
   const [charts, setCharts] = useState([]);
   const [declaredResults, setDeclaredResults] = useState([]);
   const today = moment().format("YYYY-MM-DD");
   console.log(charts)
+  console.log(games)
 
   const getResultStringForGame = (gameName) => {
     const gameResults = declaredResults.filter(
@@ -175,7 +178,7 @@ function Hero() {
           <div className="max-w-7xl mx-auto px-4 overflow-hidden sm:px-6 lg:px-8">
             <div className="flex justify-center space-x-6">
               <a href="http://download937.mediafire.com/w37wggn9gchgRE-vL-RQM7e-ygfzxof4LgwwIwguPmdrpInFQlRUULgY5Bhew2h4LtAp2Fwf4YexlNeRLcH7KB0x3kgWk86qfisbKjn2jzcsrT91AM-xgu3mk_dMxZYEKjiAvC6QqcQlR8xJl0hA-yIZJbYdmsxBo_y3YBD6qA/fal22t8mcyhgg2t/gama.apk"
-                 className="animate-bounce bg-orange-500 p-2 rounded-full w-72 text-white border-white border-2 shadow mt-3">
+                className="animate-bounce bg-orange-500 p-2 rounded-full w-72 text-white border-white border-2 shadow mt-3">
                 <FaHandPointRight className="inline-block text-lg mr-2" />
                 Download Now
               </a>
@@ -189,13 +192,13 @@ function Hero() {
 
             <div className="mt-6 flex justify-center space-x-6">
               <a className="bg-white border-orange-500 p-3 rounded-full text-gray-800 w-48 border-2 shadow text-center"
-                 href="tel:+916367591857">
+                href="tel:+916367591857">
                 <FaPhone className="inline-block mr-2" />
                 Call Now
               </a>
 
               <a className="bg-green-600 p-3 rounded-full text-white w-48 border-white border-2 shadow text-center"
-                 href="https://wa.me/+916367591857" target="_blank" rel="noopener noreferrer">
+                href="https://wa.me/+916367591857" target="_blank" rel="noopener noreferrer">
                 <FaWhatsapp className="inline-block mr-2" />
                 Whats App
               </a>
