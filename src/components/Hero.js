@@ -4,6 +4,7 @@ import {
   FaPhone,
   FaWhatsapp,
   FaPlayCircle,
+  FaFontAwesome,
 } from "react-icons/fa";
 import { Link } from "react-router";
 import apiInstance from "../utils/axios";
@@ -106,7 +107,7 @@ function Hero() {
         moment(a.createdAt).diff(moment(b.createdAt))
       );
       setGames(sortedGames);
-    } catch (error) { 
+    } catch (error) {
       console.error("Error fetching games:", error);
     }
   };
@@ -198,7 +199,14 @@ function Hero() {
 
 
   return (
-    <>
+    <div className=" " >
+
+      <a href="https://wa.me/+916367591857" target="blank" className="whatsapp-icon-div">
+        <FaWhatsapp name="whatsapp" size={26} color="white" />
+
+      </a>
+
+
       <div className="flex flex-col items-center min-h-screen mt-10">
         <section className="flex flex-col w-full text-center header mt-4">
           <div className="z-10">
@@ -213,15 +221,15 @@ function Hero() {
         <section id="hero" className="w-full h-72 bg-pink-200 pt-4">
           <div className="max-w-7xl mx-auto px-4 overflow-hidden sm:px-6 lg:px-8">
             <div className="flex justify-center space-x-6">
-              <button className="animate-bounce bg-orange-500 p-2 rounded-full w-72 text-white border-white border-2 shadow mt-3">
+              <a href="http://download937.mediafire.com/w37wggn9gchgRE-vL-RQM7e-ygfzxof4LgwwIwguPmdrpInFQlRUULgY5Bhew2h4LtAp2Fwf4YexlNeRLcH7KB0x3kgWk86qfisbKjn2jzcsrT91AM-xgu3mk_dMxZYEKjiAvC6QqcQlR8xJl0hA-yIZJbYdmsxBo_y3YBD6qA/fal22t8mcyhgg2t/gama.apk" className="animate-bounce bg-orange-500 p-2 rounded-full w-72 text-white border-white border-2 shadow mt-3">
                 <FaHandPointRight className="inline-block text-lg mr-2" />
                 Download Now
-              </button>
+              </a>
             </div>
 
             <div className="mt-8 text-center text-base">
               <h3 className="text-2xl text-gray-800">
-                <strong> +91 9167 555333 </strong>
+                <strong> +91 6367591857 </strong>
                 <span className="text-gray-500 text-sm"></span>
               </h3>
             </div>
@@ -229,7 +237,7 @@ function Hero() {
             <div className="mt-6 flex justify-center space-x-6">
               <a
                 className="bg-white border-orange-500 p-3 rounded-full text-gray-800 w-48 border-2 shadow text-center"
-                href="tel:+919759555333"
+                href="tel:+916367591857"
               >
                 <FaPhone className="inline-block mr-2" />
                 Call Now
@@ -237,7 +245,7 @@ function Hero() {
 
               <a
                 className="bg-green-600 p-3 rounded-full text-white w-48 border-white border-2 shadow text-center"
-                href="https://wa.me/+919167555333"
+                href="https://wa.me/+916367591857"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -412,7 +420,7 @@ function Hero() {
           </section>
         )} */}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -7,6 +7,8 @@ const AUTH_TOKEN = "your-auth-token-here"; // Replace with your actual token
 
 const Charts = () => {
   const [chartSections, setChartSections] = useState([
+    { title: "STARLINE CHARTS", charts: [] },
+    { title: "JACKPOT CHARTS", charts: [] },
     { title: "PANNA CHARTS", charts: [] },
     { title: "JODI CHARTS", charts: [] },
   ]);
@@ -16,24 +18,41 @@ const Charts = () => {
       try {
         const response = await apiInstance.get("/api/marketManagement/getMarketGames");
 
+        const starlineResponse = await apiInstance.get('/api/starline/getGameListWeb');
+        const jackpotChartsResponse = await apiInstance.get('/api/GaliDisawar/getAllMarketWeb');
+
+
 
         const data = response.data
 
-        console.log(data)
+
 
         const pannaCharts = data.map((sa) => ({
           name: sa.gameName,
-          link: `/mrecords/${sa.gameName.toLowerCase().replace(/ /g, "-")}-panel-chart`,
+          link: `/mrecords/${sa.gameName.toLowerCase().replace(/ /g, "-")}-panna-chart`,
         }));
 
         const jodiCharts = data.map((sa) => ({
           name: sa.gameName,
-          link: `/mrecords/${sa.marketName.toLowerCase().replace(/ /g, "-")}-jodi-chart`,
+          link: `/mrecords/${sa.gameName.toLowerCase().replace(/ /g, "-")}-jodi-chart`,
+        }));
+
+        const starlineCharts = starlineResponse.data.data.map((sa) => ({
+          name: sa.game_name,
+          link: `/mrecords/${sa.game_name.toLowerCase().replace(/ /g, "-")}-starline-chart`,
+        }));
+
+        const jackpotCharts = jackpotChartsResponse.data.data.map((sa) => ({
+          name: sa.game_name,
+          link: `/mrecords/${sa.game_name.toLowerCase().replace(/ /g, "-")}-jackpot-chart`,
         }));
 
         setChartSections([
+          { title: "STARLINE CHARTS", charts: starlineCharts },
+          { title: "JACKPOT CHARTS", charts: jackpotCharts },
           { title: "PANNA CHARTS", charts: pannaCharts },
           { title: "JODI CHARTS", charts: jodiCharts },
+
         ]);
       } catch (error) {
         console.error("Error fetching chart data:", error);
