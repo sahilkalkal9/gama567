@@ -99,7 +99,8 @@ const HowToPlay = () => {
             <li>Your second number is drawn: 9 X Your Wager of 10Rs = 90 Rs.</li>
             <li>You choose the middle number (the jodi) and the first number correct in combination: 90 X Your Wager = 900 Rs.</li>
           </ul>
-          <a href="#" className="text-orange-500 cursor-pointer font-medium">Play Live Lottery Games Today!</a>
+          <button className="text-orange-500 underline font-medium">Play Live Lottery Games Today!</button>
+
         </>
       )
     },
