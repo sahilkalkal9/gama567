@@ -1,44 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
+import apiInstance from '../utils/axios';
 
 const JodiChart = () => {
   const { gameName } = useParams();
   const navigate = useNavigate();
-  const [chartData, setChartData] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [gameTitle, setGameTitle] = useState('');
+
+  const selectedGameName = gameName || "";
 
   useEffect(() => {
-    const extractedGameName = gameName?.toLowerCase(/-jodi-chart/, '');
-
-    const formattedName = extractedGameName
-      ?.split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-
-    setGameTitle(formattedName);
-
-    const fetchData = async () => {
+    async function fetchGameResults() {
       try {
-        const response = await fetch(`https://api.jannatmatka.shop/${extractedGameName}-jodi-chart`);
-        if (!response.ok) throw new Error("Failed to fetch chart data");
-        const data = await response.json();
-        setChartData(data);
-      } catch (err) {
-        setError(err.message);
+        const response = await apiInstance.get("/api/mainmarketdeclareResult/DeclareResult");
+        const results = response.data.results || [];
+
+        const filteredResults = results.filter(
+          (item) =>
+            item.gameName.trim().toLowerCase() === selectedGameName.trim().toLowerCase()
+        );
+
+        const groupedData = {};
+        filteredResults.forEach((item) => {
+          const date = item.date;
+          if (!groupedData[date]) {
+            groupedData[date] = { date, open: null, close: null, jodi: "**" };
+          }
+          if (item.gameType.toLowerCase() === "open") {
+            groupedData[date].open = `${item.panna}`;
+          }
+          if (item.gameType.toLowerCase() === "close") {
+            groupedData[date].close = `${item.panna}`;
+          }
+        });
+
+        Object.keys(groupedData).forEach((date) => {
+          const openPanna = groupedData[date].open;
+          const closePanna = groupedData[date].close;
+          if (openPanna && closePanna) {
+            const openSum = openPanna.split("").reduce((acc, num) => acc + parseInt(num), 0);
+            const closeSum = closePanna.split("").reduce((acc, num) => acc + parseInt(num), 0);
+            groupedData[date].jodi = `${openSum % 10}${closeSum % 10}`;
+          } else if (openPanna) {
+            const openSum = openPanna.split("").reduce((acc, num) => acc + parseInt(num), 0);
+            groupedData[date].jodi = `${openSum % 10}*`;
+            groupedData[date].close = groupedData[date].close || "***";
+          } else if (closePanna) {
+            const closeSum = closePanna.split("").reduce((acc, num) => acc + parseInt(num), 0);
+            groupedData[date].jodi = `*${closeSum % 10}`;
+            groupedData[date].open = groupedData[date].open || "***";
+          } else {
+            groupedData[date].open = "***";
+            groupedData[date].close = "***";
+            groupedData[date].jodi = "**";
+          }
+        });
+
+        const finalData = Object.values(groupedData).sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        setDataSource(finalData);
+      } catch (error) {
+        console.error("Error fetching results:", error);
+        setError("Something went wrong.");
       } finally {
         setLoading(false);
       }
-    };
+    }
 
-    fetchData();
-  }, [gameName]);
-
-  const specialValues = [
-    '00', '11', '22', '33', '44', '55', '66', '77', '88', '99',
-    '05', '50', '16', '61', '27', '72', '38', '83', '49', '94', '**'
-  ];
+    fetchGameResults();
+  }, [selectedGameName]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -53,44 +86,44 @@ const JodiChart = () => {
 
   return (
     <div className="divTable mt-10">
-      <div className="gameNameChart">{gameTitle} Jodi Chart</div>
-      <div className="gameNameDesc">{gameTitle} Jodi Chart - Historical Data and Results</div>
+      <div className="gameNameChart text-xl font-bold mb-2">{selectedGameName} Jodi Chart</div>
+      <div className="gameNameDesc text-sm mb-4 text-gray-600">
+        {selectedGameName} Jodi Chart - Historical Data and Results
+      </div>
 
-      <div className="divResultsTable mt-6">
-        <table className="clsResultsTable">
-          <thead>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full text-center border border-gray-300">
+          <thead className="bg-orange text-white">
             <tr>
-              <td className="thChartResult">Date</td>
-              <td className="thChartResult">Open</td>
-              <td className="thChartResult">Close</td>
+              <th className="border px-4 py-2">Date</th>
+              {/* <th className="border px-4 py-2">Open</th> */}
+              <th className="border px-4 py-2">Jodi</th>
+              {/* <th className="border px-4 py-2">Close</th> */}
             </tr>
           </thead>
           <tbody>
-            {chartData.map((row, index) => {
-              const isOpenRed = specialValues.includes(row.open);
-              const isCloseRed = specialValues.includes(row.close);
-              return (
-                <tr key={index}>
-                  <td className="thChartResult">{row.date}</td>
-                  <td className={`fontResult thChartResult ${isOpenRed ? 'redList' : ''}`}>{row.open}</td>
-                  <td className={`fontResult thChartResult ${isCloseRed ? 'redList' : ''}`}>{row.close}</td>
-                </tr>
-              );
-            })}
+            {dataSource.map((d, index) => (
+              <tr key={index} className="border-t">
+                <td className="border px-4 py-2">{d.date}</td>
+                {/* <td className="border px-4 py-2">{d.open}</td> */}
+                <td className="border px-4 py-2">{d.jodi}</td>
+                {/* <td className="border px-4 py-2">{d.close}</td> */}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      <div className="divBottomButtons mt-6">
+      <div className="divBottomButtons mt-6 flex gap-4 justify-center">
         <button
           onClick={handleBack}
-          className="text-sm md:text-base px-2 w-20 h-7 shadow font-medium bg-orange border-orange text-white rounded-lg"
+          className="text-sm md:text-base px-4 py-2 shadow font-medium bg-orange border-orange text-white rounded-lg"
         >
           Back
         </button>
         <button
           onClick={scrollToTop}
-          className="text-sm md:text-base px-2 w-25 h-7 shadow font-medium bg-orange border-orange text-white rounded-lg"
+          className="text-sm md:text-base px-4 py-2 shadow font-medium bg-orange border-orange text-white rounded-lg"
         >
           Go to Top
         </button>

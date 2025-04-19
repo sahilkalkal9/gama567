@@ -6,10 +6,10 @@ import {
   FaPlayCircle,
   FaFontAwesome,
 } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import apiInstance from "../utils/axios";
 import moment from 'moment';
-
+import dayjs from "dayjs";
 
 
 function Hero() {
@@ -121,7 +121,7 @@ function Hero() {
       );
       setDeclaredResults(todayResults);
       // const data = await response.json();
-      // console.log(response.data)
+      // console.log(results)
       setCharts(response.data.results ? Object.entries(response.data.results) : []);
     } catch (error) {
       console.error("Error fetching declared results:", error);
@@ -136,7 +136,15 @@ function Hero() {
     fetchDeclaredResults();
   }, [today]);
 
+
+
+
+
   // console.log(declaredResults)
+
+  
+
+
 
 
   const [gameRatesObject, setGameRatesObject] = useState({});

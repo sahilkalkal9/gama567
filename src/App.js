@@ -9,8 +9,9 @@ import Charts from "./components/Charts";
 import AboutUs from "./components/AboutUs";
 import GameRules from "./components/GameRules";
 import TermsAndConditions from "./components/TermsAndConditions";
-import PanelChart from "./components/PanelChart";
 import JodiChart from "./components/JodiChart";
+import PannaChart from "./components/PanelChart";
+import JackpotChart from "./components/JackpotChart";
 
 function App() {
   const [activeTab, setActiveTab] = useState("home");
@@ -26,8 +27,9 @@ function App() {
         <Route path="/charts" element={<Charts />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/terms" element={<TermsAndConditions />} />
-        <Route path="/mrecords/:gameName-panel-chart" element={<PanelChart />} />
-        <Route path="/mrecords/:gameName-jodi-chart" element={<JodiChart />} />
+        <Route path="/panna-chart/:gameNamePanna" element={<PannaChart />} />
+        <Route path="/jackpot-chart/:gameNameJackpot" element={<JackpotChart />} />
+        <Route path="/jodi-chart/:gameName" element={<JodiChart />} />
       </Routes>
 
       {/* Footer */}

@@ -29,22 +29,22 @@ const Charts = () => {
 
         const pannaCharts = data.map((sa) => ({
           name: sa.gameName,
-          link: `/mrecords/${sa.gameName.toLowerCase().replace(/ /g, "-")}-panna-chart`,
+          link: `/panna-chart/${sa.gameName}`,
         }));
 
         const jodiCharts = data.map((sa) => ({
           name: sa.gameName,
-          link: `/mrecords/${sa.gameName.toLowerCase().replace(/ /g, "-")}-jodi-chart`,
+          link: `/jodi-chart/${sa.gameName}`,
         }));
 
         const starlineCharts = starlineResponse.data.data.map((sa) => ({
           name: sa.game_name,
-          link: `/mrecords/${sa.game_name.toLowerCase().replace(/ /g, "-")}-starline-chart`,
+          link: `/mrecords/${sa.game_name}-starline-chart`,
         }));
 
         const jackpotCharts = jackpotChartsResponse.data.data.map((sa) => ({
           name: sa.game_name,
-          link: `/mrecords/${sa.game_name.toLowerCase().replace(/ /g, "-")}-jackpot-chart`,
+          link: `/jackpot-chart/${sa.game_name}`,
         }));
 
         setChartSections([
