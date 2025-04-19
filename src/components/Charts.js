@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import apiInstance from '../utils/axios';
 import { Link } from 'react-router';
 
-const BASE_URL = "https://api.jannatmatka.shop";
-const AUTH_TOKEN = "your-auth-token-here"; // Replace with your actual token
 
 const Charts = () => {
   const [chartSections, setChartSections] = useState([

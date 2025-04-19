@@ -4,13 +4,9 @@ import {
   FaPhone,
   FaWhatsapp,
   FaPlayCircle,
-  FaFontAwesome,
 } from "react-icons/fa";
-import { Link, useParams } from "react-router";
 import apiInstance from "../utils/axios";
 import moment from 'moment';
-import dayjs from "dayjs";
-
 
 function Hero() {
   const [pricing, setPricing] = useState([]);
